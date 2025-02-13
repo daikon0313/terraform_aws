@@ -170,7 +170,7 @@ resource "aws_instance" "apache_ec2_1" {
   ami                         = "ami-0b6fe957a0eb4c1b9"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public_subnet_1.id
-  security_groups             = [aws_security_group.public_sg.id]
+  vpc_security_group_ids      = [aws_security_group.public_sg.id] # こちらを使う
   associate_public_ip_address = true
   key_name                    = aws_key_pair.tf_harato_key.key_name
 
@@ -194,12 +194,12 @@ resource "aws_instance" "apache_ec2_2" {
   ami                         = "ami-0b6fe957a0eb4c1b9"
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.public_subnet_2.id
-  security_groups             = [aws_security_group.public_sg.id]
+  vpc_security_group_ids      = [aws_security_group.public_sg.id] # こちらを使う
   associate_public_ip_address = true
   key_name                    = aws_key_pair.tf_harato_key.key_name
 
   user_data = <<-EOF
-  #!/bin/bash
+    #!/bin/bash
     sudo yum update -y
     sudo yum install -y httpd amazon-ssm-agent
     sudo systemctl start httpd

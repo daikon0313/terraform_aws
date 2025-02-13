@@ -1,2 +1,4 @@
 key
 memo.txt
+terraform.*
+*.terraform.*

@@ -13,9 +13,9 @@ provider "aws" {
 
 ############################################
 resource "aws_vpc" "main_vpc" {
-  cidr_block           = "10.0.0.0/16"  # VPCのCIDRブロック
-  enable_dns_support   = true #?
-  enable_dns_hostnames = true #?
+  cidr_block           = "10.0.0.0/16"VPCのCIDRブロック
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = {
     Name = "tf-harato-test-main-vpc"
@@ -27,7 +27,7 @@ resource "aws_subnet" "public_subnet_1" {
   vpc_id                  = aws_vpc.main_vpc.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "ap-northeast-1a"  # 例: AZ1
+  availability_zone       = "ap-northeast-1a"
 
   tags = {
     Name = "tf-harato-test-public-subnet-1"
@@ -39,7 +39,7 @@ resource "aws_subnet" "public_subnet_2" {
   vpc_id                  = aws_vpc.main_vpc.id
   cidr_block              = "10.0.2.0/24"
   map_public_ip_on_launch = true
-  availability_zone       = "ap-northeast-1c"  # 例: 別の AZ
+  availability_zone       = "ap-northeast-1c"
 
   tags = {
     Name = "tf-harato-test-public-subnet-2"
@@ -172,7 +172,6 @@ resource "aws_instance" "apache_ec2_1" {
   subnet_id                   = aws_subnet.public_subnet_1.id
   security_groups             = [aws_security_group.public_sg.id]
   associate_public_ip_address = true
-  # iam_instance_profile        = aws_iam_instance_profile.ssm_instance_profile.name
   key_name                    = aws_key_pair.tf_harato_key.key_name
 
   user_data = <<-EOF
@@ -197,7 +196,6 @@ resource "aws_instance" "apache_ec2_2" {
   subnet_id                   = aws_subnet.public_subnet_2.id
   security_groups             = [aws_security_group.public_sg.id]
   associate_public_ip_address = true
-  # iam_instance_profile        = aws_iam_instance_profile.ssm_instance_profile.name
   key_name                    = aws_key_pair.tf_harato_key.key_name
 
   user_data = <<-EOF
